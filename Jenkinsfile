@@ -6,9 +6,12 @@ pipeline {
                     sshagent(['ssh_key']) {
                         // SSH commands to connect to remote server and execute tasks
                         sh "ssh -o StrictHostKeyChecking=no root@192.168.86.145 'echo Hello from Jenkins'"
+                        sh "scp -o StrictHostKeyChecking=no CreateUsers.sh.sh root@192.168.86.145:/root"
+                        sh "ssh -o StrictHostKeyChecking=no root@192.168.86.145 'sudo chmod +x /root/CreateUsers.sh'"
+                        sh "ssh -o StrictHostKeyChecking=no root@192.168.86.145 '/root/CreateUsers.sh'"
                         sh "scp -o StrictHostKeyChecking=no GroupMembers.sh root@192.168.86.145:/root"
                         sh "ssh -o StrictHostKeyChecking=no root@192.168.86.145 'sudo chmod +x /root/GroupMembers.sh'"
-                        sh "ssh -o StrictHostKeyChecking=no root@192.168.86.145 '/root/GroupMembers.sh' > file.txt" 
+                        sh "ssh -o StrictHostKeyChecking=no root@192.168.86.145 '/root/GroupMembers.sh' > file.txt"
                     }
                 }
             }
