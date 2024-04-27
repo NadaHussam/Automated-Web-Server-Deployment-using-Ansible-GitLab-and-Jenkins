@@ -42,7 +42,7 @@ pipeline {
             def recipientEmail = 'nadahussameldien@gmail.com'
             def subject = "Jenkins Pipeline Failure - Web Server Setup (VM3)"
 
-            emailext body: "reason : ${failedReason}  -- users : ${webAdmins}  -- Date: ${date}",
+            emailext body: "Reason : ${failedReason} \nUsers : \n${webAdmins} \nDate : ${date}",
             mimeType: 'text/plain',
             subject: subject,
             to: recipientEmail,
