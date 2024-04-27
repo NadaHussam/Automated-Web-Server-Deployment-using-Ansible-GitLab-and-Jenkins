@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    stages{
         stage('Deploy Bash Script to Server') {
             steps {
                 script {
