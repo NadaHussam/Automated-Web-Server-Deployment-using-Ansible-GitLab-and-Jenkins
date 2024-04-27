@@ -1,0 +1,14 @@
+- name: Install and enable Apache HTTP Server on CentOS
+  hosts: 192.168.86.145
+  become: yes
+  tasks:
+    - name: Install Apache package
+      yum:
+        name: httpd
+        state: present
+
+    - name: Enable Apache service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
