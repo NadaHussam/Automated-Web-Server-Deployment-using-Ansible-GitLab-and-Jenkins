@@ -1,13 +1,5 @@
 pipeline {
     agent any
-    stages {
-        stage('test'){
-            steps{
-                script{
-                    sh "echo 'hello'"
-                }
-            }
-        }
         stage('Deploy Bash Script to Server') {
             steps {
                 script {
