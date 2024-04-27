@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['ssh_key']) {
-                        sh "anssible-playbook -i hosts WebServerSetup.yml"
+                        sh "ansible-playbook -i hosts WebServerSetup.yml"
                     }
                 }
             }
