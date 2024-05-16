@@ -1,5 +1,4 @@
-# nada_barakat
-## Project: Automated Web Server Deployment with CI/CD Pipeline GitHub:
+# Automated Web Server Deployment with CI/CD Pipeline GitHub:
 This project demonstrates an on-premise CI/CD pipeline for deploying a web server with Apache HTTP Server. It involves provisioning virtual machines, user management, GitLab and Jenkins integration, and automated deployment upon code changes.
 
 ### Project Goals
