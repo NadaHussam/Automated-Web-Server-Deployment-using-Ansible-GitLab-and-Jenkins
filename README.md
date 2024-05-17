@@ -29,14 +29,6 @@ This project demonstrates an on-premise CI/CD pipeline for deploying a web serve
 * Centralized control over user access and permissions for the web server.
 * Faster feedback loop through automated deployment triggered by code changes.
 
-### Deliverables
-* Public Git repository containing project code:
-    * Bash scripts (CreateUsers.sh, GroupMembers.sh)
-    * Ansible playbook (WebServerSetup.yml)
-    * Jenkinsfile defining pipeline stages
-    * README.md documentation
-* Project presentation (max 8 pages) with screenshots
-* Example of pipeline failure email notification
 
 ### Getting Started
 1. **Provision VMs:** Set up three virtual machines (Jenkins, GitLab, Web Server) on your chosen platform (e.g., VirtualBox, VMware).
@@ -45,9 +37,32 @@ This project demonstrates an on-premise CI/CD pipeline for deploying a web serve
     * GitLab server: GitLab (or similar Git hosting platform)
     * Web server: Operating system (e.g., CentOS, Rocky Linux), Apache HTTP Server
 3. **Configure User Management:** Create users and assign them to the "webAdmins" group on the web server using the provided Bash script (CreateUsers.sh).
-4. **Integrate GitLab & Jenkins:** Configure GitLab and Jenkins for communication and trigger builds upon code changes. Refer to their respective documentation for specific instructions.
-5. **Develop CI/CD Pipeline:** Create a Jenkinsfile defining the pipeline stages for script deployment, Ansible playbook execution, and email notification generation.
-6. **Test and Refine:** Test the pipeline functionality and refine configurations as needed to ensure smooth deployment automation.
+4. **Integrate GitLab & Jenkins:**
+   To facilitate communication between GitLab and Jenkins and to trigger builds upon code changes, follow these steps to configure the webhook:
+   #### Jenkins Configuration:
+   1. **Disable CSRF Protection**:
+      - Navigate to **Manage Jenkins** > **Configure Global Security**.
+      - Uncheck the option **Prevent Cross Site Request Forgery exploits**.
+   2. **Configure Job (Project)**:
+      - Go to the job configuration page by clicking on the job name and then **Configure**.
+      - Scroll down to the **Build Triggers** section.
+      - Check the option **Build when a change is pushed to GitLab**.
+      - In the **GitLab webhook URL** field, enter `http://192.168.86.143:8080/project/project1`.
+      - Click on **Advanced...** and then **Generate** to create a secret token. Take note of this token as it will be used in the GitLab webhook configuration.
+   #### GitLab Webhook Configuration:
+   1. **Set Webhook URL**:
+      - In your GitLab project, navigate to **Settings** > **Webhooks**.
+      - In the **URL** field, enter `http://192.168.86.143:8080/project/project1`.
+   2. **Enter Secret Token**:
+      - In the **Secret Token** field, paste the token generated from Jenkins.
+   3. **Select Triggers**:
+      - Choose the events that should trigger the webhook, such as **Push events** or **Merge request events**.
+   4. **Add Webhook**:
+      - Click on **Add webhook** to save the configuration.
+   By completing these steps, you have configured GitLab to send webhook notifications to Jenkins, which will trigger a build when changes are pushed to your GitLab repository.
+
+6. **Develop CI/CD Pipeline:** Create a Jenkinsfile defining the pipeline stages for script deployment, Ansible playbook execution, and email notification generation.
+7. **Test and Refine:** Test the pipeline functionality and refine configurations as needed to ensure smooth deployment automation.
 
 ### Additional Notes
 * Security considerations: Implement best practices for securing your VMs, credentials, and access controls.
